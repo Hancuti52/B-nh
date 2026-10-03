@@ -118,7 +118,7 @@
             image-rendering: crisp-edges;
         }
 
-        /* 📍 VÙNG CẢM ỨNG BẤM TƯƠNG TÁC TRONG SUỐT HOÀN TOÀN */
+        /* VÙNG BẤM TƯƠNG TÁC TRONG SUỐT HOÀN TOÀN */
         .click-hotspot {
             position: absolute;
             cursor: pointer;
@@ -133,21 +133,21 @@
             transform: scale(0.92);
         }
 
-        /* TỌA ĐỘ 7 TIỆM CHÍNH XÁC THEO HÌNH MAP.PNG */
-        /* 1. Tiệm Bánh (Góc trên trái) */
-        #spot-bakery      { top: 12%; left: 5%;   width: 42%; height: 20%; }
-        /* 2. Tiệm Sách (Góc trên phải) */
-        #spot-bookstore   { top: 10%; right: 6%;  width: 38%; height: 21%; }
-        /* 3. Tiệm Gia Công (Giữa trái) */
-        #spot-workshop    { top: 38%; left: 5%;   width: 40%; height: 19%; }
-        /* 4. Tiệm Decor (Giữa phải) */
-        #spot-decor       { top: 32%; right: 6%;  width: 38%; height: 20%; z-index: 20; }
-        /* 5. Tiệm Trái Cây (Chính giữa trung tâm) */
-        #spot-fruit       { top: 49%; left: 26%;  width: 46%; height: 18%; z-index: 30; }
-        /* 6. Tiệm Nguyên Liệu (Góc dưới trái) */
-        #spot-ingredients { top: 61%; left: 5%;   width: 40%; height: 21%; }
-        /* 7. Tiệm Điện Máy (Góc dưới phải) */
-        #spot-appliance   { top: 62%; right: 5%;  width: 44%; height: 20%; }
+        /* 📍 TỌA ĐỘ VÀ KÍCH THƯỚC CHUẨN XÁC TỪNG PIXEL THEO VIEWPORT */
+        /* 1. Tiệm Bánh (Top-Left) */
+        #spot-bakery      { top: 13.5%; left: 8%;   width: 38%; height: 18%; }
+        /* 2. Tiệm Sách (Top-Right) */
+        #spot-bookstore   { top: 11.5%; right: 12%; width: 32%; height: 18%; }
+        /* 3. Tiệm Gia Công (Mid-Left) */
+        #spot-workshop    { top: 40.0%; left: 9%;   width: 36%; height: 16%; }
+        /* 4. Tiệm Decor (Mid-Right) */
+        #spot-decor       { top: 31.5%; right: 13%; width: 30%; height: 16%; z-index: 20; }
+        /* 5. Tiệm Trái Cây (Chính Giữa) */
+        #spot-fruit       { top: 51.0%; left: 37%;  width: 36%; height: 16%; z-index: 30; }
+        /* 6. Tiệm Nguyên Liệu (Bottom-Left) */
+        #spot-ingredients { top: 68.0%; left: 9%;   width: 34%; height: 18%; }
+        /* 7. Tiệm Điện Máy (Bottom-Right) */
+        #spot-appliance   { top: 71.0%; right: 11%; width: 38%; height: 18%; }
 
         /* Modal Popups Thông Báo */
         .modal-overlay {
@@ -200,7 +200,7 @@
         <div id="map-container">
             <img src="./map.png" class="map-bg-img" alt="World Map">
 
-            <!-- Đầy đủ 7 vùng cảm ứng tương tác -->
+            <!-- 7 vùng cảm ứng đặt trùng khít từng ngôi nhà -->
             <div class="click-hotspot" id="spot-bakery" onclick="onSelectBuilding('bakery')"></div>
             <div class="click-hotspot" id="spot-bookstore" onclick="onSelectBuilding('bookstore')"></div>
             <div class="click-hotspot" id="spot-workshop" onclick="onSelectBuilding('workshop')"></div>
