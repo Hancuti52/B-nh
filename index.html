@@ -118,41 +118,30 @@
             image-rendering: crisp-edges;
         }
 
-        /* KHUNG CẢM ỨNG CĂN THEO ẢNH BẠN CHỤP */
+        /* ẨN TOÀN BỘ MÀU NỀN VÀ KHUNG VIỀN - TẠO CẢM GIÁC BẤM TRỰC TIẾP VÀO HÌNH */
         .click-hotspot {
             position: absolute;
             cursor: pointer;
             z-index: 10;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: bold;
-            color: #fff;
-            text-shadow: 0 1px 2px #000;
-            border: 2px dashed rgba(255,255,255,0.85);
-            transition: transform 0.1s ease;
+            border-radius: 16px;
+            background: transparent !important; /* Xóa màu nền */
+            border: none !important; /* Xóa khung viền */
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+        /* Hiệu ứng nẩy nhẹ khi chạm bấm */
         .click-hotspot:active {
-            transform: scale(0.95);
+            transform: scale(0.93);
+            filter: brightness(1.15);
         }
 
-        /* 📍 TỌA ĐỘ 7 TIỆM KHỚP HÌNH VẼ 100% */
-        /* 1. Tiệm Bánh (Top Left) */
-        #spot-bakery      { top: 12%;  left: 3%;   width: 44%; height: 21%; background: rgba(239, 68, 68, 0.45); }
-        /* 2. Tiệm Sách (Top Right) */
-        #spot-bookstore   { top: 13%;  right: 5%;  width: 42%; height: 21%; background: rgba(234, 179, 8, 0.45); }
-        /* 3. Tiệm Gia Công (Mid Left) */
-        #spot-workshop    { top: 40%;  left: 3%;   width: 44%; height: 20%; background: rgba(245, 158, 11, 0.45); }
-        /* 4. Tiệm Trái Cây (Ở giữa trung tâm) */
-        #spot-fruit       { top: 52%;  left: 30%;  width: 44%; height: 18%; background: rgba(34, 197, 94, 0.5); z-index: 25; }
-        /* 5. Tiệm Nguyên Liệu (Bottom Left) */
-        #spot-ingredients { top: 64%;  left: 3%;   width: 44%; height: 20%; background: rgba(14, 165, 233, 0.45); }
-        /* 6. Tiệm Điện Máy (Bottom Right) */
-        #spot-appliance   { top: 70%;  right: 5%;  width: 44%; height: 18%; background: rgba(168, 85, 247, 0.45); }
-        /* 7. Tiệm Decor (Mid Right) */
-        #spot-decor       { top: 41%;  right: 5%;  width: 42%; height: 22%; background: rgba(236, 72, 153, 0.45); z-index: 20; }
+        /* TỌA ĐỘ VÙNG CẢM ỨNG CỦA 7 TIỆM */
+        #spot-bakery      { top: 12%;  left: 3%;   width: 44%; height: 21%; }
+        #spot-bookstore   { top: 13%;  right: 5%;  width: 42%; height: 21%; }
+        #spot-workshop    { top: 40%;  left: 3%;   width: 44%; height: 20%; }
+        #spot-fruit       { top: 52%;  left: 30%;  width: 44%; height: 18%; z-index: 25; }
+        #spot-ingredients { top: 64%;  left: 3%;   width: 44%; height: 20%; }
+        #spot-appliance   { top: 70%;  right: 5%;  width: 44%; height: 18%; }
+        #spot-decor       { top: 41%;  right: 5%;  width: 42%; height: 22%; z-index: 20; }
 
         /* Modal Popups */
         .modal-overlay {
@@ -205,13 +194,14 @@
         <div id="map-container">
             <img src="./map.png" class="map-bg-img" alt="World Map">
 
-            <div class="click-hotspot" id="spot-bakery" onclick="onSelectBuilding('bakery')">Tiệm Bánh</div>
-            <div class="click-hotspot" id="spot-bookstore" onclick="onSelectBuilding('bookstore')">Tiệm Sách</div>
-            <div class="click-hotspot" id="spot-workshop" onclick="onSelectBuilding('workshop')">Tiệm Gia Công</div>
-            <div class="click-hotspot" id="spot-decor" onclick="onSelectBuilding('decor')">Tiệm Decor</div>
-            <div class="click-hotspot" id="spot-fruit" onclick="onSelectBuilding('fruit')">Tiệm Trái Cây</div>
-            <div class="click-hotspot" id="spot-ingredients" onclick="onSelectBuilding('ingredients')">Tiệm Nguyên Liệu</div>
-            <div class="click-hotspot" id="spot-appliance" onclick="onSelectBuilding('appliance')">Tiệm Điện Máy</div>
+            <!-- Các vùng cảm ứng đã ẩn màu hoàn toàn -->
+            <div class="click-hotspot" id="spot-bakery" onclick="onSelectBuilding('bakery')"></div>
+            <div class="click-hotspot" id="spot-bookstore" onclick="onSelectBuilding('bookstore')"></div>
+            <div class="click-hotspot" id="spot-workshop" onclick="onSelectBuilding('workshop')"></div>
+            <div class="click-hotspot" id="spot-decor" onclick="onSelectBuilding('decor')"></div>
+            <div class="click-hotspot" id="spot-fruit" onclick="onSelectBuilding('fruit')"></div>
+            <div class="click-hotspot" id="spot-ingredients" onclick="onSelectBuilding('ingredients')"></div>
+            <div class="click-hotspot" id="spot-appliance" onclick="onSelectBuilding('appliance')"></div>
         </div>
     </div>
 
@@ -234,7 +224,7 @@
                 <button class="modal-close" onclick="closeSettingsModal()">✕</button>
             </div>
             <div class="modal-body">
-                <b>Đổi Tên Tiệm Bánh CỦA BẠN:</b>
+                <b>Đổi Tên Tiệm Bánh Của Bạn:</b>
                 <input type="text" id="input-shop-name" class="input-name" placeholder="Nhập tên tiệm bánh..." maxlength="20">
                 <button class="btn-save-name" onclick="saveBakeryName()">Lưu Thay Đổi</button>
             </div>
