@@ -29,6 +29,7 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
+        /* Top Bar Header */
         #top-bar {
             height: 52px;
             background: #fff8e7;
@@ -118,32 +119,48 @@
             image-rendering: crisp-edges;
         }
 
-        /* ẨN TOÀN BỘ MÀU NỀN VÀ KHUNG VIỀN - TẠO CẢM GIÁC BẤM TRỰC TIẾP VÀO HÌNH */
-        .click-hotspot {
+        /* KHUNG CHỨA VÀ HIỂN THỊ ẢNH TIỆM TÁCH NÊN (PNG) */
+        .shop-node {
             position: absolute;
             cursor: pointer;
             z-index: 10;
-            border-radius: 16px;
-            background: transparent !important; /* Xóa màu nền */
-            border: none !important; /* Xóa khung viền */
-            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        /* Hiệu ứng nẩy nhẹ khi chạm bấm */
-        .click-hotspot:active {
-            transform: scale(0.93);
-            filter: brightness(1.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* TỌA ĐỘ VÙNG CẢM ỨNG CỦA 7 TIỆM */
-        #spot-bakery      { top: 12%;  left: 3%;   width: 44%; height: 21%; }
-        #spot-bookstore   { top: 13%;  right: 5%;  width: 42%; height: 21%; }
-        #spot-workshop    { top: 40%;  left: 3%;   width: 44%; height: 20%; }
-        #spot-fruit       { top: 52%;  left: 30%;  width: 44%; height: 18%; z-index: 25; }
-        #spot-ingredients { top: 64%;  left: 3%;   width: 44%; height: 20%; }
-        #spot-appliance   { top: 70%;  right: 5%;  width: 44%; height: 18%; }
-        #spot-decor       { top: 41%;  right: 5%;  width: 42%; height: 22%; z-index: 20; }
+        .shop-node img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none; /* Tránh dính sự kiện cuộn/bấm vào ảnh */
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+        }
 
-        /* Modal Popups */
+        /* Hiệu ứng nảy sinh động khi chạm vào ngôi nhà */
+        .shop-node:active {
+            transform: scale(0.90) translateY(2px);
+            filter: brightness(1.1);
+        }
+
+        /* 📍 TỌA ĐỘ VÀ KÍCH THƯỚC KHỚP CÁC FILE PNG CỦA BẠN */
+        /* 1. Tiệm Bánh (Top Left) */
+        #spot-bakery      { top: 10%;  left: 3%;   width: 44%; height: 22%; }
+        /* 2. Tiệm Sách (Top Right) */
+        #spot-bookstore   { top: 11%;  right: 5%;  width: 42%; height: 22%; }
+        /* 3. Tiệm Gia Công (Mid Left) */
+        #spot-workshop    { top: 38%;  left: 3%;   width: 44%; height: 21%; }
+        /* 4. Tiệm Trái Cây (Ở giữa trung tâm) */
+        #spot-fruit       { top: 50%;  left: 28%;  width: 46%; height: 20%; z-index: 25; }
+        /* 5. Tiệm Nguyên Liệu (Bottom Left) */
+        #spot-ingredients { top: 62%;  left: 3%;   width: 44%; height: 21%; }
+        /* 6. Tiệm Điện Máy (Bottom Right) */
+        #spot-appliance   { top: 68%;  right: 5%;  width: 44%; height: 20%; }
+        /* 7. Tiệm Decor (Mid Right) */
+        #spot-decor       { top: 39%;  right: 5%;  width: 42%; height: 23%; z-index: 20; }
+
+        /* Modal Popups Thông Báo */
         .modal-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(74, 46, 43, 0.6); backdrop-filter: blur(3px);
@@ -194,14 +211,28 @@
         <div id="map-container">
             <img src="./map.png" class="map-bg-img" alt="World Map">
 
-            <!-- Các vùng cảm ứng đã ẩn màu hoàn toàn -->
-            <div class="click-hotspot" id="spot-bakery" onclick="onSelectBuilding('bakery')"></div>
-            <div class="click-hotspot" id="spot-bookstore" onclick="onSelectBuilding('bookstore')"></div>
-            <div class="click-hotspot" id="spot-workshop" onclick="onSelectBuilding('workshop')"></div>
-            <div class="click-hotspot" id="spot-decor" onclick="onSelectBuilding('decor')"></div>
-            <div class="click-hotspot" id="spot-fruit" onclick="onSelectBuilding('fruit')"></div>
-            <div class="click-hotspot" id="spot-ingredients" onclick="onSelectBuilding('ingredients')"></div>
-            <div class="click-hotspot" id="spot-appliance" onclick="onSelectBuilding('appliance')"></div>
+            <!-- 7 File Ảnh PNG Tách Nền Lắp Trực Tiếp Lên Bản Đồ -->
+            <div class="shop-node" id="spot-bakery" onclick="onSelectBuilding('bakery')">
+                <img src="./tiembanh.png" alt="Tiệm Bánh">
+            </div>
+            <div class="shop-node" id="spot-bookstore" onclick="onSelectBuilding('bookstore')">
+                <img src="./tiemsach.png" alt="Tiệm Sách">
+            </div>
+            <div class="shop-node" id="spot-workshop" onclick="onSelectBuilding('workshop')">
+                <img src="./giacong.png" alt="Tiệm Gia Công">
+            </div>
+            <div class="shop-node" id="spot-decor" onclick="onSelectBuilding('decor')">
+                <img src="./decor.png" alt="Tiệm Decor">
+            </div>
+            <div class="shop-node" id="spot-fruit" onclick="onSelectBuilding('fruit')">
+                <img src="./traicay.png" alt="Tiệm Trái Cây">
+            </div>
+            <div class="shop-node" id="spot-ingredients" onclick="onSelectBuilding('ingredients')">
+                <img src="./nguyenlieu.png" alt="Tiệm Nguyên Liệu">
+            </div>
+            <div class="shop-node" id="spot-appliance" onclick="onSelectBuilding('appliance')">
+                <img src="./dienmay.png" alt="Tiệm Điện Máy">
+            </div>
         </div>
     </div>
 
@@ -253,7 +284,7 @@
         switch(shopId) {
             case 'bakery':
                 titleEl.innerText = "🏪 " + gameState.bakeryName.toUpperCase();
-                contentEl.innerHTML = "<b>Chức năng chính:</b> Vào 2 phòng (Bán hàng & Bếp).<br><small>(Mở ở Module 2)</small>";
+                contentEl.innerHTML = "<b>Chức năng chính:</b> Vào 2 phòng (Bán hàng & Bếp).<br><small>(Sẵn sàng mở ở Module 2)</small>";
                 break;
             case 'bookstore':
                 titleEl.innerText = "📚 TIỆM SÁCH CÔNG THỨC";
