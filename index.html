@@ -36,29 +36,64 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 14px;
+            padding: 0 10px;
             z-index: 100;
             flex-shrink: 0;
         }
 
-        .game-title {
-            font-size: 15px;
-            font-weight: bold;
-            color: #7f4f24;
+        .bakery-brand {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
+            cursor: pointer;
+            background: #ffe3a8;
+            padding: 4px 8px;
+            border-radius: 12px;
+            border: 1.5px solid #e76f51;
+        }
+
+        .bakery-logo { font-size: 18px; }
+
+        .game-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #7f4f24;
+            max-width: 110px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .top-right-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .money-badge {
             background: #ffe3a8;
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 20px;
-            border: 2px solid #e76f51;
+            border: 1.5px solid #e76f51;
             color: #7f4f24;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 12px;
         }
+
+        .btn-setting {
+            background: #f4a261;
+            border: 1.5px solid #e76f51;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+        .btn-setting:active { transform: scale(0.9); }
 
         #viewport {
             flex: 1;
@@ -83,12 +118,12 @@
             image-rendering: crisp-edges;
         }
 
-        /* VÙNG TƯƠNG TÁC CHỌN CỬA TIỆM (Khung màu bán trong suốt giúp dễ nhìn vị trí) */
+        /* KHUNG CẢM ỨNG CĂN THEO ẢNH BẠN CHỤP */
         .click-hotspot {
             position: absolute;
             cursor: pointer;
             z-index: 10;
-            border-radius: 12px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -96,33 +131,30 @@
             font-weight: bold;
             color: #fff;
             text-shadow: 0 1px 2px #000;
-            border: 2px dashed rgba(255,255,255,0.8);
+            border: 2px dashed rgba(255,255,255,0.85);
             transition: transform 0.1s ease;
         }
         .click-hotspot:active {
             transform: scale(0.95);
         }
 
-        /* 📍 TỌA ĐỘ VỊ TRÍ 6 TIỆM (BẠN CÓ THỂ CHỈNH SỬA CÁC CON SỐ % Ở ĐÂY NẾU CHƯA KHỚP A-Z) */
-        /* 1. Tiệm Trái Cây (Góc trên trái) */
-        #spot-fruit       { top: 5%;   left: 5%;   width: 40%; height: 18%; background: rgba(239, 68, 68, 0.55); }
+        /* 📍 TỌA ĐỘ 7 TIỆM KHỚP HÌNH VẼ 100% */
+        /* 1. Tiệm Bánh (Top Left) */
+        #spot-bakery      { top: 12%;  left: 3%;   width: 44%; height: 21%; background: rgba(239, 68, 68, 0.45); }
+        /* 2. Tiệm Sách (Top Right) */
+        #spot-bookstore   { top: 13%;  right: 5%;  width: 42%; height: 21%; background: rgba(234, 179, 8, 0.45); }
+        /* 3. Tiệm Gia Công (Mid Left) */
+        #spot-workshop    { top: 40%;  left: 3%;   width: 44%; height: 20%; background: rgba(245, 158, 11, 0.45); }
+        /* 4. Tiệm Trái Cây (Ở giữa trung tâm) */
+        #spot-fruit       { top: 52%;  left: 30%;  width: 44%; height: 18%; background: rgba(34, 197, 94, 0.5); z-index: 25; }
+        /* 5. Tiệm Nguyên Liệu (Bottom Left) */
+        #spot-ingredients { top: 64%;  left: 3%;   width: 44%; height: 20%; background: rgba(14, 165, 233, 0.45); }
+        /* 6. Tiệm Điện Máy (Bottom Right) */
+        #spot-appliance   { top: 70%;  right: 5%;  width: 44%; height: 18%; background: rgba(168, 85, 247, 0.45); }
+        /* 7. Tiệm Decor (Mid Right) */
+        #spot-decor       { top: 41%;  right: 5%;  width: 42%; height: 22%; background: rgba(236, 72, 153, 0.45); z-index: 20; }
 
-        /* 2. Tiệm Trang Trí (Góc trên phải) */
-        #spot-decor       { top: 5%;   right: 5%;  width: 40%; height: 18%; background: rgba(168, 85, 247, 0.55); }
-
-        /* 3. Xưởng Gia Công (Giữa bên trái) */
-        #spot-workshop    { top: 32%;  left: 5%;   width: 40%; height: 18%; background: rgba(245, 158, 11, 0.55); }
-
-        /* 4. TIỆM BÁNH CỦA BẠN (Góc giữa bên phải - Tiệm lớn) */
-        #spot-bakery      { top: 30%;  right: 5%;  width: 45%; height: 22%; background: rgba(34, 197, 94, 0.65); z-index: 20; }
-
-        /* 5. Tiệm Nguyên Liệu (Góc dưới trái) */
-        #spot-ingredients { top: 60%;  left: 5%;   width: 40%; height: 18%; background: rgba(14, 165, 233, 0.55); }
-
-        /* 6. Tiệm Sách Công Thức (Góc dưới phải) */
-        #spot-bookstore   { top: 60%;  right: 5%;  width: 40%; height: 18%; background: rgba(234, 179, 8, 0.55); }
-
-        /* Modal Popups Thông Báo */
+        /* Modal Popups */
         .modal-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(74, 46, 43, 0.6); backdrop-filter: blur(3px);
@@ -142,29 +174,48 @@
             border-radius: 50%; font-weight: bold; cursor: pointer;
         }
         .modal-body { padding: 16px; font-size: 13px; color: #5c2c16; text-align: center; line-height: 1.5; }
+        .input-name {
+            width: 100%; padding: 8px 12px; margin-top: 10px; border-radius: 10px;
+            border: 2px solid #f4a261; font-size: 14px; text-align: center; outline: none;
+        }
+        .btn-save-name {
+            margin-top: 10px; background: #e76f51; color: #fff; border: none;
+            padding: 8px 16px; border-radius: 12px; font-weight: bold; cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
 <div id="game-app">
+    <!-- Top Bar Header -->
     <div id="top-bar">
-        <div class="game-title">🧁 Bếp Bánh Hạnh Phúc</div>
-        <div class="money-badge">🪙 <span id="txt-money">3.000.000</span> VNĐ</div>
+        <div class="bakery-brand" onclick="openSettingsModal()">
+            <span class="bakery-logo">🧁</span>
+            <span class="game-title" id="txt-bakery-name">Bếp Bánh Hạnh Phúc</span>
+        </div>
+        
+        <div class="top-right-controls">
+            <div class="money-badge">🪙 <span id="txt-money">3.000.000</span>đ</div>
+            <div class="btn-setting" onclick="openSettingsModal()">⚙️</div>
+        </div>
     </div>
 
+    <!-- Viewport Bản Đồ -->
     <div id="viewport">
         <div id="map-container">
             <img src="./map.png" class="map-bg-img" alt="World Map">
 
-            <div class="click-hotspot" id="spot-fruit" onclick="onSelectBuilding('fruit')">Trái Cây</div>
-            <div class="click-hotspot" id="spot-decor" onclick="onSelectBuilding('decor')">Trang Trí</div>
-            <div class="click-hotspot" id="spot-workshop" onclick="onSelectBuilding('workshop')">Xưởng Thiết Bị</div>
-            <div class="click-hotspot" id="spot-bakery" onclick="onSelectBuilding('bakery')">🏪 Tiệm Bánh</div>
-            <div class="click-hotspot" id="spot-ingredients" onclick="onSelectBuilding('ingredients')">Nguyên Liệu</div>
-            <div class="click-hotspot" id="spot-bookstore" onclick="onSelectBuilding('bookstore')">Sách Công Thức</div>
+            <div class="click-hotspot" id="spot-bakery" onclick="onSelectBuilding('bakery')">Tiệm Bánh</div>
+            <div class="click-hotspot" id="spot-bookstore" onclick="onSelectBuilding('bookstore')">Tiệm Sách</div>
+            <div class="click-hotspot" id="spot-workshop" onclick="onSelectBuilding('workshop')">Tiệm Gia Công</div>
+            <div class="click-hotspot" id="spot-decor" onclick="onSelectBuilding('decor')">Tiệm Decor</div>
+            <div class="click-hotspot" id="spot-fruit" onclick="onSelectBuilding('fruit')">Tiệm Trái Cây</div>
+            <div class="click-hotspot" id="spot-ingredients" onclick="onSelectBuilding('ingredients')">Tiệm Nguyên Liệu</div>
+            <div class="click-hotspot" id="spot-appliance" onclick="onSelectBuilding('appliance')">Tiệm Điện Máy</div>
         </div>
     </div>
 
+    <!-- Modal Popup Thông Báo -->
     <div class="modal-overlay" id="modal-shop-info">
         <div class="modal-card">
             <div class="modal-header">
@@ -174,12 +225,34 @@
             <div class="modal-body" id="popup-content"></div>
         </div>
     </div>
+
+    <!-- Modal Cài Đặt / Đổi Tên -->
+    <div class="modal-overlay" id="modal-settings">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span>⚙️ CÀI ĐẶT GAME</span>
+                <button class="modal-close" onclick="closeSettingsModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <b>Đổi Tên Tiệm Bánh Của Bạn:</b>
+                <input type="text" id="input-shop-name" class="input-name" placeholder="Nhập tên tiệm bánh..." maxlength="20">
+                <button class="btn-save-name" onclick="saveBakeryName()">Lưu Thay Đổi</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    let gameState = { money: 3000000 };
+    let gameState = { 
+        money: 3000000,
+        bakeryName: "Bếp Bánh Hạnh Phúc"
+    };
 
     function initModule1() {
+        const savedName = localStorage.getItem('bakery_name');
+        if (savedName) gameState.bakeryName = savedName;
+
+        document.getElementById('txt-bakery-name').innerText = gameState.bakeryName;
         document.getElementById('txt-money').innerText = gameState.money.toLocaleString('vi-VN');
     }
 
@@ -189,28 +262,32 @@
 
         switch(shopId) {
             case 'bakery':
-                titleEl.innerText = "🏪 BẾP BÁNH HẠNH PHÚC";
-                contentEl.innerHTML = "<b>Chức năng chính:</b> Vào 2 phòng (Bán hàng & Bếp).<br><small>(Sẵn sàng mở ở Module 2)</small>";
-                break;
-            case 'ingredients':
-                titleEl.innerText = "🧈 TIỆM NGUYÊN LIỆU";
-                contentEl.innerText = "Nơi mua Bơ, Đường, Sữa, Bột mì, Thau inox...";
+                titleEl.innerText = "🏪 " + gameState.bakeryName.toUpperCase();
+                contentEl.innerHTML = "<b>Chức năng chính:</b> Vào 2 phòng (Bán hàng & Bếp).<br><small>(Mở ở Module 2)</small>";
                 break;
             case 'bookstore':
                 titleEl.innerText = "📚 TIỆM SÁCH CÔNG THỨC";
                 contentEl.innerText = "Nơi mua các cuốn sách mở khóa công thức bánh mới.";
                 break;
             case 'workshop':
-                titleEl.innerText = "🛠 XƯỞNG GIA CÔNG & THIẾT BỊ";
-                contentEl.innerHTML = "Nơi mua quầy kệ, Lò nướng, Tủ lạnh, Máy đánh bột.";
-                break;
-            case 'decor':
-                titleEl.innerText = "🎨 TIỆM TRANG TRÍ";
-                contentEl.innerText = "Nơi mua Rèm cửa, Thảm trải sàn, Chậu cây trang trí.";
+                titleEl.innerText = "🛠 TIỆM GIA CÔNG";
+                contentEl.innerText = "Nơi đặt gia công quầy kệ và khuôn bánh đặc biệt.";
                 break;
             case 'fruit':
                 titleEl.innerText = "🍓 TIỆM TRÁI CÂY TƯƠI";
                 contentEl.innerText = "Nơi mua Dâu tây, Táo, Cam tươi làm mứt và trang trí bánh.";
+                break;
+            case 'ingredients':
+                titleEl.innerText = "🧈 TIỆM NGUYÊN LIỆU";
+                contentEl.innerText = "Nơi mua Bơ, Đường, Sữa, Bột mì, Thau inox...";
+                break;
+            case 'appliance':
+                titleEl.innerText = "🔌 TIỆM ĐIỆN MÁY";
+                contentEl.innerText = "Nơi mua Lò nướng, Tủ lạnh, Máy đánh trứng, Máy nhồi bột.";
+                break;
+            case 'decor':
+                titleEl.innerText = "🎨 TIỆM DECOR";
+                contentEl.innerText = "Nơi mua Rèm cửa, Thảm trải sàn, Chậu cây trang trí.";
                 break;
         }
 
@@ -219,6 +296,25 @@
 
     function closeShopModal() {
         document.getElementById('modal-shop-info').style.display = 'none';
+    }
+
+    function openSettingsModal() {
+        document.getElementById('input-shop-name').value = gameState.bakeryName;
+        document.getElementById('modal-settings').style.display = 'flex';
+    }
+
+    function closeSettingsModal() {
+        document.getElementById('modal-settings').style.display = 'none';
+    }
+
+    function saveBakeryName() {
+        const newName = document.getElementById('input-shop-name').value.trim();
+        if (newName) {
+            gameState.bakeryName = newName;
+            localStorage.setItem('bakery_name', newName);
+            document.getElementById('txt-bakery-name').innerText = newName;
+            closeSettingsModal();
+        }
     }
 
     window.onload = initModule1;
