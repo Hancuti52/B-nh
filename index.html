@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bếp Bánh Hạnh Phúc</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
+        
+        html, body { 
+            width: 100%; 
+            height: 100%; 
+            background: #1a1a24; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            overflow: hidden; 
+        }
+
+        /* Khung di động chuẩn tỉ lệ 9:16 */
+        #game-app {
+            width: 380px;
+            height: 675px;
+            position: relative;
+            background: #fff8e7;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        #top-bar {
+            height: 52px;
+            background: #fff8e7;
+            border-bottom: 2px solid #f4a261;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 14px;
+            z-index: 100;
+            flex-shrink: 0;
+        }
+
+        .game-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #7f4f24;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .money-badge {
+            background: #ffe3a8;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 2px solid #e76f51;
+            color: #7f4f24;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        #viewport {
+            flex: 1;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #map-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Tải ảnh map.png trực tiếp từ GitHub */
+        .map-bg-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        /* Vùng tương tác đè lên 6 cửa tiệm */
+        .click-hotspot {
+            position: absolute;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 16px;
+            transition: background 0.15s ease, transform 0.1s ease;
+        }
+        .click-hotspot:active {
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(0.96);
+        }
+
+        #spot-fruit       { top: 2%;   left: 6%;   width: 42%; height: 20%; }
+        #spot-decor       { top: 2%;   right: 5%;  width: 42%; height: 23%; }
+        #spot-workshop    { top: 26%;  left: 3%;   width: 38%; height: 18%; }
+        #spot-bakery      { top: 35%;  left: 30%;  width: 42%; height: 22%; z-index: 20; }
+        #spot-ingredients { top: 65%;  left: 5%;   width: 43%; height: 22%; }
+        #spot-bookstore   { top: 67%;  right: 5%;  width: 43%; height: 23%; }
+
+        /* Popups Modal Thông Báo */
+        .modal-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(74, 46, 43, 0.6); backdrop-filter: blur(3px);
+            z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-card {
+            width: 100%; max-width: 300px; background: #fffdf7; border: 3px solid #e76f51;
+            border-radius: 20px; display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        }
+        .modal-header {
+            background: #f4a261; color: #5c2c16; padding: 10px 14px;
+            display: flex; align-items: center; justify-content: space-between; font-weight: bold;
+        }
+        .modal-close {
+            background: #e76f51; color: #fff; border: none; width: 26px; height: 26px;
+            border-radius: 50%; font-weight: bold; cursor: pointer;
+        }
+        .modal-body { padding: 16px; font-size: 13px; color: #5c2c16; text-align: center; line-height: 1.5; }
+    </style>
+</head>
+<body>
+
+<div id="game-app">
+    <!-- Top Bar Header với tên game mới -->
+    <div id="top-bar">
+        <div class="game-title">🧁 Bếp Bánh Hạnh Phúc</div>
+        <div class="money-badge">🪙 <span id="txt-money">3.000.000</span> VNĐ</div>
+    </div>
+
+    <!-- Viewport Bản Đồ -->
+    <div id="viewport">
+        <div id="map-container">
+            <img src="./map.png" class="map-bg-img" alt="World Map">
+
+            <div class="click-hotspot" id="spot-fruit" onclick="onSelectBuilding('fruit')"></div>
+            <div class="click-hotspot" id="spot-decor" onclick="onSelectBuilding('decor')"></div>
+            <div class="click-hotspot" id="spot-workshop" onclick="onSelectBuilding('workshop')"></div>
+            <div class="click-hotspot" id="spot-bakery" onclick="onSelectBuilding('bakery')"></div>
+            <div class="click-hotspot" id="spot-ingredients" onclick="onSelectBuilding('ingredients')"></div>
+            <div class="click-hotspot" id="spot-bookstore" onclick="onSelectBuilding('bookstore')"></div>
+        </div>
+    </div>
+
+    <!-- Modal Popup Thông Báo -->
+    <div class="modal-overlay" id="modal-shop-info">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span id="popup-title">Thông tin cửa hàng</span>
+                <button class="modal-close" onclick="closeShopModal()">✕</button>
+            </div>
+            <div class="modal-body" id="popup-content"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let gameState = { money: 3000000 };
+
+    function initModule1() {
+        document.getElementById('txt-money').innerText = gameState.money.toLocaleString('vi-VN');
+    }
+
+    function onSelectBuilding(shopId) {
+        const titleEl = document.getElementById('popup-title');
+        const contentEl = document.getElementById('popup-content');
+
+        switch(shopId) {
+            case 'bakery':
+                titleEl.innerText = "🏪 BẾP BÁNH HẠNH PHÚC";
+                contentEl.innerHTML = "<b>Chức năng chính:</b> Vào 2 phòng (Bán hàng & Bếp).<br><small>(Mở ở Module 2)</small>";
+                break;
+            case 'ingredients':
+                titleEl.innerText = "🧈 TIỆM NGUYÊN LIỆU";
+                contentEl.innerText = "Nơi mua Bơ, Đường, Sữa, Bột mì, Thau inox...";
+                break;
+            case 'bookstore':
+                titleEl.innerText = "📚 TIỆM SÁCH CÔNG THỨC";
+                contentEl.innerText = "Nơi mua các cuốn sách mở khóa công thức bánh mới.";
+                break;
+            case 'workshop':
+                titleEl.innerText = "🛠 XƯỞNG GIA CÔNG & THIẾT BỊ";
+                contentEl.innerHTML = "Nơi mua quầy kệ, Lò nướng, Tủ lạnh, Máy đánh bột.";
+                break;
+            case 'decor':
+                titleEl.innerText = "🎨 TIỆM TRANG TRÍ";
+                contentEl.innerText = "Nơi mua Rèm cửa, Thảm trải sàn, Chậu cây trang trí.";
+                break;
+            case 'fruit':
+                titleEl.innerText = "🍓 TIỆM TRÁI CÂY TƯƠI";
+                contentEl.innerText = "Nơi mua Dâu tây, Táo, Cam tươi làm mứt và trang trí bánh.";
+                break;
+        }
+
+        document.getElementById('modal-shop-info').style.display = 'flex';
+    }
+
+    function closeShopModal() {
+        document.getElementById('modal-shop-info').style.display = 'none';
+    }
+
+    window.onload = initModule1;
+</script>
+</body>
+</html>
