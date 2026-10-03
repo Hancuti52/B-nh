@@ -118,14 +118,14 @@
             image-rendering: crisp-edges;
         }
 
-        /* 📍 VÙNG BẤM CẢM ỨNG TRONG SUỐT HOÀN TOÀN - KHÔNG HIỂN THỊ MÀU ĐÈ LÊN */
+        /* 📍 VÙNG BẤM CẢM ỨNG TRONG SUỐT HOÀN TOÀN KHÔNG BỊ RÁC MÀU/LỆCH HÌNH */
         .click-hotspot {
             position: absolute;
             cursor: pointer;
             z-index: 10;
             border-radius: 20px;
-            background: rgba(0, 0, 0, 0) !important; /* Xóa màu nền hoàn toàn */
-            border: none !important;                  /* Xóa viền nét đứt */
+            background: transparent !important;
+            border: none !important;
             transition: transform 0.15s ease;
         }
         
@@ -134,7 +134,7 @@
             transform: scale(0.92);
         }
 
-        /* TỌA ĐỘ VÙNG CẢM ỨNG CHUẨN ĐÈ TRÚNG 7 NGÔI NHÀ */
+        /* TỌA ĐỘ VÙNG CẢM ỨNG CHUẨN XÁC ĐỀ TRÚNG 7 NGÔI NHÀ */
         #spot-bakery      { top: 11%;  left: 3%;   width: 44%; height: 22%; }
         #spot-bookstore   { top: 12%;  right: 5%;  width: 42%; height: 22%; }
         #spot-workshop    { top: 39%;  left: 3%;   width: 44%; height: 21%; }
@@ -194,7 +194,7 @@
         <div id="map-container">
             <img src="./map.png" class="map-bg-img" alt="World Map">
 
-            <!-- Các vùng bấm cảm ứng hoàn toàn trong suốt -->
+            <!-- Vùng bấm cảm ứng hoàn toàn trong suốt -->
             <div class="click-hotspot" id="spot-bakery" onclick="onSelectBuilding('bakery')"></div>
             <div class="click-hotspot" id="spot-bookstore" onclick="onSelectBuilding('bookstore')"></div>
             <div class="click-hotspot" id="spot-workshop" onclick="onSelectBuilding('workshop')"></div>
@@ -253,7 +253,7 @@
         switch(shopId) {
             case 'bakery':
                 titleEl.innerText = "🏪 " + gameState.bakeryName.toUpperCase();
-                contentEl.innerHTML = "<b>Chức năng chính:</b> Vào 2 phòng (Bán hàng & Bếp).<br><small>(Mở ở Module 2)</small>";
+                contentEl.innerHTML = "<b>Chức năng chính:</b> Vào 2 phòng (Bán hàng & Bếp).<br><small>(Sẵn sàng mở ở Module 2)</small>";
                 break;
             case 'bookstore':
                 titleEl.innerText = "📚 TIỆM SÁCH CÔNG THỨC";
