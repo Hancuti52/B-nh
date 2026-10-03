@@ -17,7 +17,6 @@
             overflow: hidden; 
         }
 
-        /* Khung di động chuẩn tỉ lệ 9:16 */
         #game-app {
             width: 380px;
             height: 675px;
@@ -75,7 +74,6 @@
             position: relative;
         }
 
-        /* Tải ảnh map.png trực tiếp từ GitHub */
         .map-bg-img {
             width: 100%;
             height: 100%;
@@ -85,27 +83,46 @@
             image-rendering: crisp-edges;
         }
 
-        /* Vùng tương tác đè lên 6 cửa tiệm */
+        /* VÙNG TƯƠNG TÁC CHỌN CỬA TIỆM (Khung màu bán trong suốt giúp dễ nhìn vị trí) */
         .click-hotspot {
             position: absolute;
             cursor: pointer;
             z-index: 10;
-            border-radius: 16px;
-            transition: background 0.15s ease, transform 0.1s ease;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 1px 2px #000;
+            border: 2px dashed rgba(255,255,255,0.8);
+            transition: transform 0.1s ease;
         }
         .click-hotspot:active {
-            background: rgba(255, 255, 255, 0.35);
-            transform: scale(0.96);
+            transform: scale(0.95);
         }
 
-        #spot-fruit       { top: 2%;   left: 6%;   width: 42%; height: 20%; }
-        #spot-decor       { top: 2%;   right: 5%;  width: 42%; height: 23%; }
-        #spot-workshop    { top: 26%;  left: 3%;   width: 38%; height: 18%; }
-        #spot-bakery      { top: 35%;  left: 30%;  width: 42%; height: 22%; z-index: 20; }
-        #spot-ingredients { top: 65%;  left: 5%;   width: 43%; height: 22%; }
-        #spot-bookstore   { top: 67%;  right: 5%;  width: 43%; height: 23%; }
+        /* 📍 TỌA ĐỘ VỊ TRÍ 6 TIỆM (BẠN CÓ THỂ CHỈNH SỬA CÁC CON SỐ % Ở ĐÂY NẾU CHƯA KHỚP A-Z) */
+        /* 1. Tiệm Trái Cây (Góc trên trái) */
+        #spot-fruit       { top: 5%;   left: 5%;   width: 40%; height: 18%; background: rgba(239, 68, 68, 0.55); }
 
-        /* Popups Modal Thông Báo */
+        /* 2. Tiệm Trang Trí (Góc trên phải) */
+        #spot-decor       { top: 5%;   right: 5%;  width: 40%; height: 18%; background: rgba(168, 85, 247, 0.55); }
+
+        /* 3. Xưởng Gia Công (Giữa bên trái) */
+        #spot-workshop    { top: 32%;  left: 5%;   width: 40%; height: 18%; background: rgba(245, 158, 11, 0.55); }
+
+        /* 4. TIỆM BÁNH CỦA BẠN (Góc giữa bên phải - Tiệm lớn) */
+        #spot-bakery      { top: 30%;  right: 5%;  width: 45%; height: 22%; background: rgba(34, 197, 94, 0.65); z-index: 20; }
+
+        /* 5. Tiệm Nguyên Liệu (Góc dưới trái) */
+        #spot-ingredients { top: 60%;  left: 5%;   width: 40%; height: 18%; background: rgba(14, 165, 233, 0.55); }
+
+        /* 6. Tiệm Sách Công Thức (Góc dưới phải) */
+        #spot-bookstore   { top: 60%;  right: 5%;  width: 40%; height: 18%; background: rgba(234, 179, 8, 0.55); }
+
+        /* Modal Popups Thông Báo */
         .modal-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(74, 46, 43, 0.6); backdrop-filter: blur(3px);
@@ -130,27 +147,24 @@
 <body>
 
 <div id="game-app">
-    <!-- Top Bar Header với tên game mới -->
     <div id="top-bar">
         <div class="game-title">🧁 Bếp Bánh Hạnh Phúc</div>
         <div class="money-badge">🪙 <span id="txt-money">3.000.000</span> VNĐ</div>
     </div>
 
-    <!-- Viewport Bản Đồ -->
     <div id="viewport">
         <div id="map-container">
             <img src="./map.png" class="map-bg-img" alt="World Map">
 
-            <div class="click-hotspot" id="spot-fruit" onclick="onSelectBuilding('fruit')"></div>
-            <div class="click-hotspot" id="spot-decor" onclick="onSelectBuilding('decor')"></div>
-            <div class="click-hotspot" id="spot-workshop" onclick="onSelectBuilding('workshop')"></div>
-            <div class="click-hotspot" id="spot-bakery" onclick="onSelectBuilding('bakery')"></div>
-            <div class="click-hotspot" id="spot-ingredients" onclick="onSelectBuilding('ingredients')"></div>
-            <div class="click-hotspot" id="spot-bookstore" onclick="onSelectBuilding('bookstore')"></div>
+            <div class="click-hotspot" id="spot-fruit" onclick="onSelectBuilding('fruit')">Trái Cây</div>
+            <div class="click-hotspot" id="spot-decor" onclick="onSelectBuilding('decor')">Trang Trí</div>
+            <div class="click-hotspot" id="spot-workshop" onclick="onSelectBuilding('workshop')">Xưởng Thiết Bị</div>
+            <div class="click-hotspot" id="spot-bakery" onclick="onSelectBuilding('bakery')">🏪 Tiệm Bánh</div>
+            <div class="click-hotspot" id="spot-ingredients" onclick="onSelectBuilding('ingredients')">Nguyên Liệu</div>
+            <div class="click-hotspot" id="spot-bookstore" onclick="onSelectBuilding('bookstore')">Sách Công Thức</div>
         </div>
     </div>
 
-    <!-- Modal Popup Thông Báo -->
     <div class="modal-overlay" id="modal-shop-info">
         <div class="modal-card">
             <div class="modal-header">
@@ -176,7 +190,7 @@
         switch(shopId) {
             case 'bakery':
                 titleEl.innerText = "🏪 BẾP BÁNH HẠNH PHÚC";
-                contentEl.innerHTML = "<b>Chức năng chính:</b> Vào 2 phòng (Bán hàng & Bếp).<br><small>(Mở ở Module 2)</small>";
+                contentEl.innerHTML = "<b>Chức năng chính:</b> Vào 2 phòng (Bán hàng & Bếp).<br><small>(Sẵn sàng mở ở Module 2)</small>";
                 break;
             case 'ingredients':
                 titleEl.innerText = "🧈 TIỆM NGUYÊN LIỆU";
