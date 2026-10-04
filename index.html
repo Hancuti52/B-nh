@@ -8,185 +8,155 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
         
         html, body { 
-            width: 100%; 
-            height: 100%; 
-            background: #1a1a24; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            overflow: hidden; 
+            width: 100%; height: 100%; background: #1a1a24; 
+            display: flex; justify-content: center; align-items: center; overflow: hidden; 
         }
 
         #game-app {
-            width: 380px;
-            height: 675px;
-            position: relative;
-            background: #fff8e7;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            width: 380px; height: 675px; position: relative; background: #fff8e7;
+            display: flex; flex-direction: column; overflow: hidden;
+            border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
+        /* --- TOP BAR GLOBAL (AVATAR & LEVEL) --- */
         #top-bar {
-            height: 52px;
-            background: #fff8e7;
-            border-bottom: 2px solid #f4a261;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 10px;
-            z-index: 100;
-            flex-shrink: 0;
+            height: 56px; background: #fffdf7; border-bottom: 2px solid #f4a261;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 8px; z-index: 100; flex-shrink: 0;
         }
 
-        .bakery-brand {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            background: #ffe3a8;
-            padding: 4px 8px;
-            border-radius: 12px;
+        .user-profile {
+            display: flex; align-items: center; gap: 6px; cursor: pointer;
+            background: #ffe3a8; padding: 3px 8px 3px 4px; border-radius: 20px;
             border: 1.5px solid #e76f51;
         }
 
-        .bakery-logo { font-size: 18px; }
-
-        .game-title {
-            font-size: 13px;
-            font-weight: bold;
-            color: #7f4f24;
-            max-width: 110px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .avatar-box {
+            width: 32px; height: 32px; border-radius: 50%; background: #fff;
+            border: 1.5px solid #e76f51; display: flex; align-items: center;
+            justify-content: center; font-size: 18px; overflow: hidden;
         }
 
-        .top-right-controls {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .user-info { display: flex; flex-direction: column; }
+        .game-title { font-size: 11px; font-weight: bold; color: #7f4f24; max-width: 90px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .user-level { font-size: 10px; font-weight: bold; color: #e76f51; }
 
+        .top-right-controls { display: flex; align-items: center; gap: 6px; }
         .money-badge {
-            background: #ffe3a8;
-            padding: 4px 10px;
-            border-radius: 20px;
-            border: 1.5px solid #e76f51;
-            color: #7f4f24;
-            font-weight: bold;
-            font-size: 12px;
+            background: #ffe3a8; padding: 4px 8px; border-radius: 16px;
+            border: 1.5px solid #e76f51; color: #7f4f24; font-weight: bold; font-size: 11px;
         }
 
         .btn-setting {
-            background: #f4a261;
-            border: 1.5px solid #e76f51;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 14px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-        }
-        .btn-setting:active { transform: scale(0.9); }
-
-        #viewport {
-            flex: 1;
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+            background: #f4a261; border: 1.5px solid #e76f51; width: 30px; height: 30px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 15px; color: #fff;
         }
 
-        #map-container {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
+        /* --- VIEWPORT CONTAINER --- */
+        #viewport { flex: 1; position: relative; width: 100%; height: 100%; overflow: hidden; }
+        .screen-view { width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: none; }
+        .screen-view.active { display: block; }
 
-        .map-bg-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
-        }
+        /* --- MODULE 1: MAP BẢN ĐỒ --- */
+        #map-container { width: 100%; height: 100%; position: relative; }
+        .map-bg-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* VÙNG BẤM TƯƠNG TÁC TRONG SUỐT HOÀN TOÀN */
-        .click-hotspot {
-            position: absolute;
-            cursor: pointer;
-            z-index: 10;
-            border-radius: 16px;
-            background: transparent !important;
-            border: none !important;
+        .building-node {
+            position: absolute; cursor: pointer; z-index: 10;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             transition: transform 0.15s ease;
         }
-        
-        .click-hotspot:active {
-            transform: scale(0.92);
+        .building-node:active { transform: scale(0.92); }
+        .building-node img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25)); }
+
+        /* Tọa độ chuẩn khớp với map.png */
+        #shop-bakery      { top: 7.0%;  left: 3.0%;  width: 42%; height: 22%; z-index: 10; }
+        #shop-bookstore   { top: 0.5%;  right: 10%;  width: 32%; height: 18%; z-index: 10; }
+        #shop-workshop    { top: 38.0%; left: 5.0%;  width: 37%; height: 19%; z-index: 20; }
+        #shop-decor       { top: 26.5%; right: 10%;  width: 33%; height: 19%; z-index: 20; }
+        #shop-fruit       { top: 46.5%; left: 35.0%; width: 36%; height: 21%; z-index: 25; }
+        #shop-ingredients { top: 68.5%; left: 4.0%;  width: 35%; height: 20%; z-index: 30; }
+        #shop-appliance   { top: 70.5%; right: 5.0%; width: 40%; height: 20%; z-index: 30; }
+
+        /* --- MODULE 2: TIỆM BÁNH 3 PHÒNG (PANORAMA) --- */
+        .room-scroll-container {
+            width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden;
+            position: relative; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+        }
+        .room-scroll-container::-webkit-scrollbar { display: none; }
+        .wide-room-bg { height: 100%; width: auto; min-width: 650px; display: block; pointer-events: none; }
+
+        .room-nav-bar {
+            position: absolute; top: 8px; left: 8px; right: 8px;
+            display: flex; justify-content: space-between; align-items: center; z-index: 50; pointer-events: none;
+        }
+        .btn-back-map, .tab-switcher { pointer-events: auto; }
+        .btn-back-map {
+            background: #e76f51; color: #fff; border: 2px solid #fff; padding: 5px 10px;
+            border-radius: 12px; font-weight: bold; font-size: 11px; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+        .tab-switcher { display: flex; background: rgba(255, 253, 247, 0.95); padding: 3px; border-radius: 16px; border: 2px solid #f4a261; }
+        .tab-btn { padding: 4px 8px; border-radius: 10px; border: none; background: transparent; font-weight: bold; font-size: 10px; color: #7f4f24; cursor: pointer; }
+        .tab-btn.active { background: #f4a261; color: #fff; }
+
+        /* 🛋 KÉO THẢ VÀ CHỈNH SỬA NỘI THẤT */
+        .placed-furniture { position: absolute; cursor: move; z-index: 30; display: inline-block; touch-action: none; }
+        .placed-furniture img { display: block; max-width: 160px; pointer-events: auto; }
+
+        .furniture-controls {
+            position: absolute; top: -32px; left: 50%; transform: translateX(-50%);
+            display: none; background: rgba(0,0,0,0.8); padding: 2px 6px; border-radius: 12px; gap: 4px; z-index: 40;
+        }
+        .placed-furniture.selected .furniture-controls { display: flex; }
+        .btn-action-item {
+            background: #fff; border: none; border-radius: 50%; width: 22px; height: 22px;
+            font-size: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
 
-        /* 📍 TỌA ĐỘ VÀ KÍCH THƯỚC CHUẨN XÁC TỪNG PIXEL THEO VIEWPORT */
-        /* 1. Tiệm Bánh (Top-Left) */
-        #spot-bakery      { top: 13.5%; left: 8%;   width: 38%; height: 18%; }
-        /* 2. Tiệm Sách (Top-Right) */
-        #spot-bookstore   { top: 11.5%; right: 12%; width: 32%; height: 18%; }
-        /* 3. Tiệm Gia Công (Mid-Left) */
-        #spot-workshop    { top: 40.0%; left: 9%;   width: 36%; height: 16%; }
-        /* 4. Tiệm Decor (Mid-Right) */
-        #spot-decor       { top: 31.5%; right: 13%; width: 30%; height: 16%; z-index: 20; }
-        /* 5. Tiệm Trái Cây (Chính Giữa) */
-        #spot-fruit       { top: 51.0%; left: 37%;  width: 36%; height: 16%; z-index: 30; }
-        /* 6. Tiệm Nguyên Liệu (Bottom-Left) */
-        #spot-ingredients { top: 68.0%; left: 9%;   width: 34%; height: 18%; }
-        /* 7. Tiệm Điện Máy (Bottom-Right) */
-        #spot-appliance   { top: 71.0%; right: 11%; width: 38%; height: 18%; }
-
-        /* Modal Popups Thông Báo */
+        /* --- MODALS & POPUPS --- */
         .modal-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(74, 46, 43, 0.6); backdrop-filter: blur(3px);
-            z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px;
+            background: rgba(74, 46, 43, 0.65); backdrop-filter: blur(3px);
+            z-index: 200; display: none; align-items: center; justify-content: center; padding: 16px;
         }
         .modal-card {
-            width: 100%; max-width: 300px; background: #fffdf7; border: 3px solid #e76f51;
-            border-radius: 20px; display: flex; flex-direction: column; overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            width: 100%; max-width: 320px; background: #fffdf7; border: 3px solid #e76f51;
+            border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
-        .modal-header {
-            background: #f4a261; color: #5c2c16; padding: 10px 14px;
-            display: flex; align-items: center; justify-content: space-between; font-weight: bold;
-        }
-        .modal-close {
-            background: #e76f51; color: #fff; border: none; width: 26px; height: 26px;
-            border-radius: 50%; font-weight: bold; cursor: pointer;
-        }
-        .modal-body { padding: 16px; font-size: 13px; color: #5c2c16; text-align: center; line-height: 1.5; }
-        .input-name {
-            width: 100%; padding: 8px 12px; margin-top: 10px; border-radius: 10px;
-            border: 2px solid #f4a261; font-size: 14px; text-align: center; outline: none;
-        }
-        .btn-save-name {
-            margin-top: 10px; background: #e76f51; color: #fff; border: none;
-            padding: 8px 16px; border-radius: 12px; font-weight: bold; cursor: pointer;
-        }
+        .modal-header { background: #f4a261; color: #5c2c16; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; font-weight: bold; font-size: 13px; }
+        .modal-close { background: #e76f51; color: #fff; border: none; width: 24px; height: 24px; border-radius: 50%; font-weight: bold; cursor: pointer; }
+        .modal-body { padding: 14px; font-size: 12px; color: #5c2c16; text-align: center; }
+
+        .shop-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; max-height: 260px; overflow-y: auto; }
+        .shop-item-card { background: #fff; border: 2px solid #f4a261; border-radius: 12px; padding: 6px; display: flex; flex-direction: column; align-items: center; }
+        .shop-item-card img { width: 90px; height: 60px; object-fit: contain; }
+        .item-name { font-weight: bold; font-size: 11px; margin: 3px 0; color: #7f4f24; }
+        .item-price { color: #e76f51; font-weight: bold; font-size: 10px; }
+        .btn-buy { margin-top: 4px; background: #e76f51; color: #fff; border: none; padding: 4px 8px; border-radius: 8px; font-size: 10px; font-weight: bold; cursor: pointer; width: 100%; }
+
+        .form-group { margin-bottom: 10px; text-align: left; }
+        .form-group label { font-weight: bold; font-size: 11px; color: #7f4f24; display: block; margin-bottom: 4px; }
+        .input-text { width: 100%; padding: 6px 10px; border-radius: 8px; border: 1.5px solid #f4a261; font-size: 12px; outline: none; }
+        .avatar-selector { display: flex; gap: 8px; justify-content: center; margin-top: 6px; }
+        .avatar-option { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; }
+        .avatar-option.active { border-color: #e76f51; background: #ffe3a8; }
+
+        .setting-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #f4a261; }
+        .btn-giftcode { background: #2a9d8f; color: #fff; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 6px; }
     </style>
 </head>
 <body>
 
 <div id="game-app">
-    <!-- Top Bar Header -->
+    <!-- --- TOP BAR GLOBAL (AVATAR & LEVEL) --- -->
     <div id="top-bar">
-        <div class="bakery-brand" onclick="openSettingsModal()">
-            <span class="bakery-logo">🧁</span>
-            <span class="game-title" id="txt-bakery-name">Bếp Bánh Hạnh Phúc</span>
+        <div class="user-profile" onclick="openProfileModal()">
+            <div class="avatar-box" id="user-avatar-display">🧁</div>
+            <div class="user-info">
+                <span class="game-title" id="txt-bakery-name">Tiệm Bánh</span>
+                <span class="user-level" id="txt-user-level">Lv.1 Tân Thủ</span>
+            </div>
         </div>
         
         <div class="top-right-controls">
@@ -195,23 +165,162 @@
         </div>
     </div>
 
-    <!-- Viewport Bản Đồ -->
+    <!-- --- VIEWPORT CONTAINER --- -->
     <div id="viewport">
-        <div id="map-container">
-            <img src="./map.png" class="map-bg-img" alt="World Map">
+        <!-- 🗺 MÀN HÌNH 1: BẢN ĐỒ MAP (7 TIỆM) -->
+        <div class="screen-view active" id="view-map">
+            <div id="map-container">
+                <img src="./map.png" class="map-bg-img" alt="Map Bếp Bánh">
 
-            <!-- 7 vùng cảm ứng đặt trùng khít từng ngôi nhà -->
-            <div class="click-hotspot" id="spot-bakery" onclick="onSelectBuilding('bakery')"></div>
-            <div class="click-hotspot" id="spot-bookstore" onclick="onSelectBuilding('bookstore')"></div>
-            <div class="click-hotspot" id="spot-workshop" onclick="onSelectBuilding('workshop')"></div>
-            <div class="click-hotspot" id="spot-decor" onclick="onSelectBuilding('decor')"></div>
-            <div class="click-hotspot" id="spot-fruit" onclick="onSelectBuilding('fruit')"></div>
-            <div class="click-hotspot" id="spot-ingredients" onclick="onSelectBuilding('ingredients')"></div>
-            <div class="click-hotspot" id="spot-appliance" onclick="onSelectBuilding('appliance')"></div>
+                <div class="building-node" id="shop-bakery" onclick="enterBakery()">
+                    <img src="./tiembanh.png" alt="Tiệm Bánh">
+                </div>
+                <div class="building-node" id="shop-bookstore" onclick="openShopInfo('bookstore')">
+                    <img src="./tiemsach.png" alt="Tiệm Sách">
+                </div>
+                <div class="building-node" id="shop-workshop" onclick="openShopInfo('workshop')">
+                    <img src="./giacong.png" alt="Xưởng Gia Công">
+                </div>
+                <div class="building-node" id="shop-decor" onclick="openDecorShop()">
+                    <img src="./decor.png" alt="Tiệm Decor">
+                </div>
+                <div class="building-node" id="shop-fruit" onclick="openShopInfo('fruit')">
+                    <img src="./traicay.png" alt="Tiệm Trái Cây">
+                </div>
+                <div class="building-node" id="shop-ingredients" onclick="openShopInfo('ingredients')">
+                    <img src="./nguyenlieu.png" alt="Tiệm Nguyên Liệu">
+                </div>
+                <div class="building-node" id="shop-appliance" onclick="openShopInfo('appliance')">
+                    <img src="./dienmay.png" alt="Tiệm Điện Máy">
+                </div>
+            </div>
+        </div>
+
+        <!-- 🏪 MÀN HÌNH 2: TIỆM BÁNH 3 PHÒNG (BÁN HÀNG, BẾP, KHO) -->
+        <div class="screen-view" id="view-bakery">
+            <div class="room-nav-bar">
+                <button class="btn-back-map" onclick="backToMap()">🗺 Bản Đồ</button>
+                <div class="tab-switcher">
+                    <button class="tab-btn active" id="btn-tab-sell" onclick="switchRoom('sell')">🛒 Bán Hàng</button>
+                    <button class="tab-btn" id="btn-tab-kitchen" onclick="switchRoom('kitchen')">🍳 Căn Bếp</button>
+                    <button class="tab-btn" id="btn-tab-storage" onclick="switchRoom('storage')">📦 Kho Hàng</button>
+                </div>
+            </div>
+
+            <!-- Tab 1: Phòng Bán Hàng -->
+            <div id="subview-sell" class="room-scroll-container" onclick="deselectFurniture(event)">
+                <img src="./phongbanhong.png" class="wide-room-bg" id="bg-sell-room" alt="Phòng Bán Hàng" onerror="this.src='./phongbantrang.png'">
+                <div id="furniture-layer-sell"></div>
+            </div>
+
+            <!-- Tab 2: Căn Bếp -->
+            <div id="subview-kitchen" class="room-scroll-container" style="display:none;" onclick="deselectFurniture(event)">
+                <img src="./phongbephong.png" class="wide-room-bg" id="bg-kitchen-room" alt="Căn Bếp" onerror="this.src='./phongbeptrang.png'">
+                <div id="furniture-layer-kitchen"></div>
+            </div>
+
+            <!-- Tab 3: Kho Hàng -->
+            <div id="subview-storage" class="room-scroll-container" style="display:none;" onclick="deselectFurniture(event)">
+                <img src="./phongkhohong.png" class="wide-room-bg" id="bg-storage-room" alt="Kho Hàng" onerror="this.src='./phongkhotrang.png'">
+                <div id="furniture-layer-storage"></div>
+            </div>
         </div>
     </div>
 
-    <!-- Modal Popup Thông Báo -->
+    <!-- 🎨 MODAL TIỆM DECOR (NỘI THẤT CHẠY THỬ) -->
+    <div class="modal-overlay" id="modal-decor-shop">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span>🎨 TIỆM DECOR NỘI THẤT</span>
+                <button class="modal-close" onclick="closeDecorShop()">✕</button>
+            </div>
+            <div class="modal-body">
+                <b>QUẦY THU NGÂN & TRANG TRÍ:</b>
+                <div class="shop-items-grid">
+                    <div class="shop-item-card">
+                        <img src="./quaygoxoi.png" alt="Quầy Gỗ Xồi">
+                        <div class="item-name">Quầy Gỗ Xồi</div>
+                        <div class="item-price">1.000.000đ</div>
+                        <button class="btn-buy" onclick="buyFurniture('quaygoxoi.png', 1000000)">Mua Ngay</button>
+                    </div>
+
+                    <div class="shop-item-card">
+                        <img src="./quayhong.png" alt="Quầy Hồng Ngọt">
+                        <div class="item-name">Quầy Hồng Ngọt</div>
+                        <div class="item-price">1.200.000đ</div>
+                        <button class="btn-buy" onclick="buyFurniture('quayhong.png', 1200000)">Mua Ngay</button>
+                    </div>
+
+                    <div class="shop-item-card">
+                        <img src="./quaysangtrong.png" alt="Quầy Sang Trọng">
+                        <div class="item-name">Quầy Sang Trọng</div>
+                        <div class="item-price">1.800.000đ</div>
+                        <button class="btn-buy" onclick="buyFurniture('quaysangtrong.png', 1800000)">Mua Ngay</button>
+                    </div>
+
+                    <div class="shop-item-card">
+                        <img src="./quayxanh.png" alt="Quầy Xanh Tươi">
+                        <div class="item-name">Quầy Xanh Tươi</div>
+                        <div class="item-price">1.500.000đ</div>
+                        <button class="btn-buy" onclick="buyFurniture('quayxanh.png', 1500000)">Mua Ngay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 👤 MODAL AVATAR & LEVEL PHỦ NGƯỜI CHƠI -->
+    <div class="modal-overlay" id="modal-profile">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span>👤 HỒ SƠ NGƯỜI CHƠI</span>
+                <button class="modal-close" onclick="closeProfileModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Tên Tiệm Bánh:</label>
+                    <input type="text" id="input-profile-name" class="input-text" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label>Chọn Biểu Tượng Avatar:</label>
+                    <div class="avatar-selector">
+                        <div class="avatar-option active" onclick="selectAvatarIcon('🧁', this)">🧁</div>
+                        <div class="avatar-option" onclick="selectAvatarIcon('👩‍🍳', this)">👩‍🍳</div>
+                        <div class="avatar-option" onclick="selectAvatarIcon('👨‍🍳', this)">👨‍‍🍳</div>
+                        <div class="avatar-option" onclick="selectAvatarIcon('🐱', this)">🐱</div>
+                    </div>
+                </div>
+                <button class="btn-buy" onclick="saveProfileChanges()" style="padding: 8px; margin-top: 6px;">Lưu Thay Đổi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ⚙️ MODAL CÀI ĐẶT (ÂM THANH & GIFTCODE) -->
+    <div class="modal-overlay" id="modal-settings">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span>⚙️ CÀI ĐẶT GAME</span>
+                <button class="modal-close" onclick="closeSettingsModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-row">
+                    <span>🎵 Nhạc Nền (BGM):</span>
+                    <input type="checkbox" id="chk-bgm" checked>
+                </div>
+                <div class="setting-row">
+                    <span>🔔 Hiệu Ứng (SFX):</span>
+                    <input type="checkbox" id="chk-sfx" checked>
+                </div>
+                <div class="form-group" style="margin-top: 12px;">
+                    <label>🎁 Nhập Giftcode:</label>
+                    <input type="text" id="input-giftcode" class="input-text" placeholder="Nhập mã nhận quà..." style="text-transform: uppercase;">
+                    <button class="btn-giftcode" onclick="claimGiftcode()">Nhận Quà</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Popups Thông Báo Khác -->
     <div class="modal-overlay" id="modal-shop-info">
         <div class="modal-card">
             <div class="modal-header">
@@ -221,99 +330,269 @@
             <div class="modal-body" id="popup-content"></div>
         </div>
     </div>
-
-    <!-- Modal Cài Đặt / Đổi Tên -->
-    <div class="modal-overlay" id="modal-settings">
-        <div class="modal-card">
-            <div class="modal-header">
-                <span>⚙️ CÀI ĐẶT GAME</span>
-                <button class="modal-close" onclick="closeSettingsModal()">✕</button>
-            </div>
-            <div class="modal-body">
-                <b>Đổi Tên Tiệm Bánh Của Bạn:</b>
-                <input type="text" id="input-shop-name" class="input-name" placeholder="Nhập tên tiệm bánh..." maxlength="20">
-                <button class="btn-save-name" onclick="saveBakeryName()">Lưu Thay Đổi</button>
-            </div>
-        </div>
-    </div>
 </div>
 
 <script>
     let gameState = { 
         money: 3000000,
-        bakeryName: "Bếp Bánh Hạnh Phúc"
+        level: 1,
+        bakeryName: "Tiệm Bánh Hạnh Phúc",
+        avatar: "🧁",
+        currentRoom: 'sell'
     };
 
-    function initModule1() {
+    function initGame() {
         const savedName = localStorage.getItem('bakery_name');
+        const savedAvatar = localStorage.getItem('user_avatar');
         if (savedName) gameState.bakeryName = savedName;
+        if (savedAvatar) gameState.avatar = savedAvatar;
 
+        updateUI();
+        
+        // Tặng quà Quầy Gỗ Xồi lúc đầu game
+        setTimeout(() => {
+            alert("🎉 TẶNG QUÀ TÂN THỦ:\nBạn nhận được 1 [Quầy Gỗ Xồi] đã được đặt vào Phòng Bán Hàng!");
+            placeFurniture('quaygoxoi.png', 'sell', true);
+        }, 600);
+    }
+
+    function updateUI() {
         document.getElementById('txt-bakery-name').innerText = gameState.bakeryName;
+        document.getElementById('user-avatar-display').innerText = gameState.avatar;
         document.getElementById('txt-money').innerText = gameState.money.toLocaleString('vi-VN');
     }
 
-    function onSelectBuilding(shopId) {
+    function enterBakery() {
+        document.getElementById('view-map').classList.remove('active');
+        document.getElementById('view-bakery').classList.add('active');
+        switchRoom('sell');
+    }
+
+    function backToMap() {
+        document.getElementById('view-bakery').classList.remove('active');
+        document.getElementById('view-map').classList.add('active');
+    }
+
+    function switchRoom(roomType) {
+        gameState.currentRoom = roomType;
+        const sellTab = document.getElementById('subview-sell');
+        const kitchenTab = document.getElementById('subview-kitchen');
+        const storageTab = document.getElementById('subview-storage');
+
+        const btnSell = document.getElementById('btn-tab-sell');
+        const btnKitchen = document.getElementById('btn-tab-kitchen');
+        const btnStorage = document.getElementById('btn-tab-storage');
+
+        sellTab.style.display = 'none';
+        kitchenTab.style.display = 'none';
+        storageTab.style.display = 'none';
+
+        btnSell.classList.remove('active');
+        btnKitchen.classList.remove('active');
+        btnStorage.classList.remove('active');
+
+        if (roomType === 'sell') {
+            sellTab.style.display = 'block';
+            btnSell.classList.add('active');
+        } else if (roomType === 'kitchen') {
+            kitchenTab.style.display = 'block';
+            btnKitchen.classList.add('active');
+        } else {
+            storageTab.style.display = 'block';
+            btnStorage.classList.add('active');
+        }
+    }
+
+    /* TIỆM DECOR & QUẢN LÝ NỘI THẤT */
+    function openDecorShop() { document.getElementById('modal-decor-shop').style.display = 'flex'; }
+    function closeDecorShop() { document.getElementById('modal-decor-shop').style.display = 'none'; }
+
+    function buyFurniture(imgSrc, price) {
+        if (gameState.money >= price) {
+            gameState.money -= price;
+            updateUI();
+            closeDecorShop();
+            enterBakery();
+            placeFurniture(imgSrc, gameState.currentRoom, false);
+        } else {
+            alert("Bạn không đủ tiền mua món đồ này!");
+        }
+    }
+
+    let furnitureCount = 0;
+    function placeFurniture(imgSrc, roomType, isCounter = false) {
+        furnitureCount++;
+        const itemId = 'item-' + furnitureCount;
+        const layer = document.getElementById('furniture-layer-' + roomType);
+
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'placed-furniture';
+        itemDiv.id = itemId;
+        itemDiv.style.top = '380px';
+        itemDiv.style.left = '120px';
+        itemDiv.dataset.scale = 1;
+        itemDiv.dataset.flip = 1;
+
+        itemDiv.innerHTML = `
+            <div class="furniture-controls">
+                <button class="btn-action-item" onclick="flipFurniture('${itemId}', event)">🔄</button>
+                <button class="btn-action-item" onclick="scaleFurniture('${itemId}', 0.1, event)">➕</button>
+                <button class="btn-action-item" onclick="scaleFurniture('${itemId}', -0.1, event)">➖</button>
+                <button class="btn-action-item" onclick="removeFurniture('${itemId}', event)" style="color:red;">✕</button>
+            </div>
+            <img src="./${imgSrc}" id="img-${itemId}" onclick="clickFurniture('${imgSrc}', event)">
+        `;
+
+        itemDiv.addEventListener('click', (e) => selectFurniture(itemId, e));
+        makeDraggable(itemDiv);
+
+        if(layer) layer.appendChild(itemDiv);
+    }
+
+    function clickFurniture(imgSrc, e) {
+        e.stopPropagation();
+        if(imgSrc.includes('quay')) {
+            alert("🛎 BÁN HÀNG:\nBạn bấm vào Quầy Thu Ngân! Giao diện Bán Hàng chi tiết sẽ được cập nhật ở Module 3!");
+        }
+    }
+
+    function selectFurniture(id, e) {
+        e.stopPropagation();
+        document.querySelectorAll('.placed-furniture').forEach(el => el.classList.remove('selected'));
+        document.getElementById(id).classList.add('selected');
+    }
+
+    function deselectFurniture(e) {
+        document.querySelectorAll('.placed-furniture').forEach(el => el.classList.remove('selected'));
+    }
+
+    function flipFurniture(id, e) {
+        e.stopPropagation();
+        const item = document.getElementById(id);
+        let flip = parseFloat(item.dataset.flip) * -1;
+        item.dataset.flip = flip;
+        applyTransform(item);
+    }
+
+    function scaleFurniture(id, delta, e) {
+        e.stopPropagation();
+        const item = document.getElementById(id);
+        let scale = parseFloat(item.dataset.scale) + delta;
+        if (scale >= 0.5 && scale <= 1.8) {
+            item.dataset.scale = scale;
+            applyTransform(item);
+        }
+    }
+
+    function applyTransform(item) {
+        const scale = item.dataset.scale;
+        const flip = item.dataset.flip;
+        const img = item.querySelector('img');
+        img.style.transform = `scale(${scale}) scaleX(${flip})`;
+    }
+
+    function removeFurniture(id, e) {
+        e.stopPropagation();
+        const item = document.getElementById(id);
+        if (item) item.remove();
+    }
+
+    /* KÉO THẢ DRAG & DROP */
+    function makeDraggable(elmnt) {
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        elmnt.onmousedown = dragMouseDown;
+        elmnt.ontouchstart = dragTouchStart;
+
+        function dragMouseDown(e) {
+            e.preventDefault(); pos3 = e.clientX; pos4 = e.clientY;
+            document.onmouseup = closeDragElement; document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e.preventDefault();
+            pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
+            pos3 = e.clientX; pos4 = e.clientY;
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() { document.onmouseup = null; document.onmousemove = null; }
+
+        function dragTouchStart(e) {
+            const touch = e.touches[0]; pos3 = touch.clientX; pos4 = touch.clientY;
+            document.ontouchend = closeTouchElement; document.ontouchmove = elementTouchMove;
+        }
+
+        function elementTouchMove(e) {
+            const touch = e.touches[0];
+            pos1 = pos3 - touch.clientX; pos2 = pos4 - touch.clientY;
+            pos3 = touch.clientX; pos4 = touch.clientY;
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeTouchElement() { document.ontouchend = null; document.ontouchmove = null; }
+    }
+
+    /* MODAL AVATAR & LEVEL */
+    let tempAvatar = '🧁';
+    function openProfileModal() {
+        document.getElementById('input-profile-name').value = gameState.bakeryName;
+        document.getElementById('modal-profile').style.display = 'flex';
+    }
+    function closeProfileModal() { document.getElementById('modal-profile').style.display = 'none'; }
+
+    function selectAvatarIcon(icon, el) {
+        tempAvatar = icon;
+        document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    function saveProfileChanges() {
+        const newName = document.getElementById('input-profile-name').value.trim();
+        if(newName) {
+            gameState.bakeryName = newName;
+            gameState.avatar = tempAvatar;
+            localStorage.setItem('bakery_name', newName);
+            localStorage.setItem('user_avatar', tempAvatar);
+            updateUI();
+            closeProfileModal();
+        }
+    }
+
+    /* MODAL CÀI ĐẶT & GIFTCODE */
+    function openSettingsModal() { document.getElementById('modal-settings').style.display = 'flex'; }
+    function closeSettingsModal() { document.getElementById('modal-settings').style.display = 'none'; }
+
+    function claimGiftcode() {
+        const code = document.getElementById('input-giftcode').value.trim().toUpperCase();
+        if(code === 'BEPBANH2026' || code === 'GIFT888') {
+            gameState.money += 500000;
+            updateUI();
+            alert("🎉 ĐỔI CODE THÀNH CÔNG!\nBạn nhận được +500.000đ thưởng!");
+            document.getElementById('input-giftcode').value = '';
+            closeSettingsModal();
+        } else {
+            alert("Mã Giftcode không hợp lệ hoặc đã hết hạn!");
+        }
+    }
+
+    function openShopInfo(shopId) {
         const titleEl = document.getElementById('popup-title');
         const contentEl = document.getElementById('popup-content');
 
         switch(shopId) {
-            case 'bakery':
-                titleEl.innerText = "🏪 " + gameState.bakeryName.toUpperCase();
-                contentEl.innerHTML = "<b>Chức năng chính:</b> Vào 2 phòng (Bán hàng & Bếp).<br><small>(Sẵn sàng mở ở Module 2)</small>";
-                break;
-            case 'bookstore':
-                titleEl.innerText = "📚 TIỆM SÁCH CÔNG THỨC";
-                contentEl.innerText = "Nơi mua các cuốn sách mở khóa công thức bánh mới.";
-                break;
-            case 'workshop':
-                titleEl.innerText = "🛠 TIỆM GIA CÔNG";
-                contentEl.innerText = "Nơi đặt gia công quầy kệ và khuôn bánh đặc biệt.";
-                break;
-            case 'decor':
-                titleEl.innerText = "🎨 TIỆM DECOR";
-                contentEl.innerText = "Nơi mua Rèm cửa, Thảm trải sàn, Chậu cây trang trí.";
-                break;
-            case 'fruit':
-                titleEl.innerText = "🍓 TIỆM TRÁI CÂY TƯƠI";
-                contentEl.innerText = "Nơi mua Dâu tây, Táo, Cam tươi làm mứt và trang trí bánh.";
-                break;
-            case 'ingredients':
-                titleEl.innerText = "🧈 TIỆM NGUYÊN LIỆU";
-                contentEl.innerText = "Nơi mua Bơ, Đường, Sữa, Bột mì, Thau inox...";
-                break;
-            case 'appliance':
-                titleEl.innerText = "🔌 TIỆM ĐIỆN MÁY";
-                contentEl.innerText = "Nơi mua Lò nướng, Tủ lạnh, Máy đánh trứng, Máy nhồi bột.";
-                break;
+            case 'bookstore': titleEl.innerText = "📚 TIỆM SÁCH CÔNG THỨC"; contentEl.innerText = "Nơi mua sách mở khóa công thức bánh mới."; break;
+            case 'workshop': titleEl.innerText = "🛠 XƯỞNG GIA CÔNG"; contentEl.innerText = "Nơi chế tạo quầy kệ và khuôn bánh."; break;
+            case 'fruit': titleEl.innerText = "🍓 TIỆM TRÁI CÂY TƯƠI"; contentEl.innerText = "Nơi mua Dâu tây, Táo, Cam tươi."; break;
+            case 'ingredients': titleEl.innerText = "🧈 TIỆM NGUYÊN LIỆU"; contentEl.innerText = "Nơi mua Bơ, Đường, Sữa, Bột mì..."; break;
+            case 'appliance': titleEl.innerText = "🔌 TIỆM ĐIỆN MÁY"; contentEl.innerText = "Nơi mua Lò nướng, Tủ lạnh, Máy đánh trứng..."; break;
         }
-
         document.getElementById('modal-shop-info').style.display = 'flex';
     }
+    function closeShopModal() { document.getElementById('modal-shop-info').style.display = 'none'; }
 
-    function closeShopModal() {
-        document.getElementById('modal-shop-info').style.display = 'none';
-    }
-
-    function openSettingsModal() {
-        document.getElementById('input-shop-name').value = gameState.bakeryName;
-        document.getElementById('modal-settings').style.display = 'flex';
-    }
-
-    function closeSettingsModal() {
-        document.getElementById('modal-settings').style.display = 'none';
-    }
-
-    function saveBakeryName() {
-        const newName = document.getElementById('input-shop-name').value.trim();
-        if (newName) {
-            gameState.bakeryName = newName;
-            localStorage.setItem('bakery_name', newName);
-            document.getElementById('txt-bakery-name').innerText = newName;
-            closeSettingsModal();
-        }
-    }
-
-    window.onload = initModule1;
+    window.onload = initGame;
 </script>
 </body>
 </html>
