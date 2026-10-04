@@ -22,77 +22,105 @@
         #top-bar {
             height: 56px; background: #fffdf7; border-bottom: 2px solid #f4a261;
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 10px; z-index: 100; flex-shrink: 0;
+            padding: 0 10px; z-index: 1000; flex-shrink: 0; position: relative;
         }
 
         .user-profile {
             display: flex; align-items: center; gap: 6px; cursor: pointer;
-            background: #ffe3a8; padding: 3px 8px; border-radius: 20px;
-            border: 1.5px solid #e76f51;
+            background: #ffe3a8; padding: 3px 8px; border-radius: 20px; border: 1.5px solid #e76f51;
         }
-
-        .avatar-box {
-            width: 30px; height: 30px; border-radius: 50%; background: #fff;
-            border: 1.5px solid #e76f51; display: flex; align-items: center;
-            justify-content: center; font-size: 16px;
-        }
-
+        .avatar-box { width: 30px; height: 30px; border-radius: 50%; background: #fff; border: 1.5px solid #e76f51; display: flex; align-items: center; justify-content: center; font-size: 16px; }
         .user-info { display: flex; flex-direction: column; }
         .game-title { font-size: 11px; font-weight: bold; color: #7f4f24; max-width: 90px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .user-level { font-size: 9px; font-weight: bold; color: #e76f51; }
 
         .top-right-controls { display: flex; align-items: center; gap: 6px; }
-        .money-badge {
-            background: #ffe3a8; padding: 4px 8px; border-radius: 16px;
-            border: 1.5px solid #e76f51; color: #7f4f24; font-weight: bold; font-size: 11px;
-        }
+        .money-badge { background: #ffe3a8; padding: 4px 8px; border-radius: 16px; border: 1.5px solid #e76f51; color: #7f4f24; font-weight: bold; font-size: 11px; }
+        .btn-setting { background: #f4a261; border: 1.5px solid #e76f51; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 15px; color: #fff; }
 
-        .btn-setting {
-            background: #f4a261; border: 1.5px solid #e76f51; width: 30px; height: 30px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 15px; color: #fff;
-        }
-
-        /* --- VIEWPORT CONTAINER --- */
+        /* --- VIEWPORT CONTAINERS --- */
         #viewport { flex: 1; position: relative; width: 100%; height: 100%; overflow: hidden; }
-        .screen-view { width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: none; }
-        .screen-view.active { display: block !important; }
 
-        /* --- MODULE 1: MAP BẢN ĐỒ --- */
+        /* MODULE 1: MAP CONTAINER */
+        #view-map {
+            width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 10; display: block;
+        }
         #map-container { width: 100%; height: 100%; position: relative; background: #ffe3a8; }
-        .map-bg-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .map-bg-img { width: 100%; height: 100%; object-fit: fill; display: block; }
 
         .building-node {
-            position: absolute; cursor: pointer; z-index: 50;
+            position: absolute; cursor: pointer; z-index: 20;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            pointer-events: auto !important;
         }
         .building-node:active { transform: scale(0.92); }
-        .building-node img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+        .building-node img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* Tọa độ chuẩn 7 tiệm */
-        #shop-bakery      { top: 7.0%;  left: 3.0%;  width: 42%; height: 22%; z-index: 60; }
-        #shop-bookstore   { top: 0.5%;  right: 10%;  width: 32%; height: 18%; z-index: 60; }
-        #shop-workshop    { top: 38.0%; left: 5.0%;  width: 37%; height: 19%; z-index: 60; }
-        #shop-decor       { top: 26.5%; right: 10%;  width: 33%; height: 19%; z-index: 60; }
-        #shop-fruit       { top: 46.5%; left: 35.0%; width: 36%; height: 21%; z-index: 60; }
-        #shop-ingredients { top: 68.5%; left: 4.0%;  width: 35%; height: 20%; z-index: 60; }
-        #shop-appliance   { top: 70.5%; right: 5.0%; width: 40%; height: 20%; z-index: 60; }
+        /* Tọa độ 7 tiệm */
+        #shop-bakery      { top: 2.0%;  left: 2.0%;  width: 48%; height: 25%; z-index: 25; }
+        #shop-bookstore   { top: 1.0%;  right: 8.0%; width: 38%; height: 20%; z-index: 25; }
+        #shop-workshop    { top: 36.0%; left: 5.0%;  width: 40%; height: 21%; z-index: 30; }
+        #shop-decor       { top: 24.0%; right: 6.0%; width: 38%; height: 21%; z-index: 30; }
+        #shop-fruit       { top: 45.0%; left: 32.0%; width: 40%; height: 22%; z-index: 35; }
+        #shop-ingredients { top: 67.0%; left: 4.0%;  width: 38%; height: 21%; z-index: 40; }
+        #shop-appliance   { top: 68.0%; right: 4.0%; width: 43%; height: 22%; z-index: 40; }
 
-        /* --- MODULE 2: TIỆM BÁNH 3 PHÒNG --- */
+        /* MODULE 2: TIỆM BÁNH (3 PHÒNG) */
+        #view-bakery {
+            width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 50; display: none; background: #fff;
+        }
         .room-scroll-container {
             width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden;
             position: relative; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-            background: #fefae0;
         }
         .room-scroll-container::-webkit-scrollbar { display: none; }
-        .wide-room-bg { height: 100%; width: auto; min-width: 650px; display: block; pointer-events: none; }
+        .wide-room-bg { height: 100%; width: auto; min-width: 600px; display: block; pointer-events: none; }
+
+        /* 🚪 THUỘC TÍNH CHUNG CỦA KHUNG CỬA BẤM CHUYỂN PHÒNG */
+        .door-hotspot {
+            position: absolute;
+            cursor: pointer;
+            z-index: 20;
+            border-radius: 8px;
+            /* Viền đỏ nhạt hiện lên để bạn dễ căn chỉnh, sau này có thể xóa bớt viền đi */
+            background: rgba(244, 162, 97, 0.15);
+            border: 2px dashed #e76f51;
+            transition: background 0.2s;
+        }
+        .door-hotspot:active {
+            background: rgba(231, 111, 81, 0.4);
+        }
+
+        /* 📍 TỌA ĐỘ CỬA RIÊNG BIỆT CHO TỪNG PHÒNG (BẠN TỰ CHỈNH VỊ TRÍ TẠI ĐÂY) */
+        
+        /* 1. Vị trí cửa ở Phòng Bán Hàng */
+        #door-sell {
+            top: 32%;      /* Khoảng cách từ trên xuống */
+            left: 38%;     /* Khoảng cách từ bên trái sang */
+            width: 24%;    /* Chiều rộng khung cửa */
+            height: 50%;   /* Chiều cao khung cửa */
+        }
+
+        /* 2. Vị trí cửa ở Căn Bếp */
+        #door-kitchen {
+            top: 30%; 
+            left: 35%; 
+            width: 25%; 
+            height: 52%; 
+        }
+
+        /* 3. Vị trí cửa ở Kho Hàng */
+        #door-storage {
+            top: 34%; 
+            left: 40%; 
+            width: 22%; 
+            height: 48%; 
+        }
 
         .room-nav-bar {
             position: absolute; top: 8px; left: 8px; right: 8px;
             display: flex; justify-content: space-between; align-items: center; z-index: 100; pointer-events: none;
         }
-        .btn-back-map, .tab-switcher { pointer-events: auto !important; }
+        .btn-back-map, .tab-switcher { pointer-events: auto; }
         .btn-back-map {
             background: #e76f51; color: #fff; border: 2px solid #fff; padding: 5px 10px;
             border-radius: 12px; font-weight: bold; font-size: 11px; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2);
@@ -101,9 +129,9 @@
         .tab-btn { padding: 4px 8px; border-radius: 10px; border: none; background: transparent; font-weight: bold; font-size: 10px; color: #7f4f24; cursor: pointer; }
         .tab-btn.active { background: #f4a261; color: #fff; }
 
-        /* NỘI THẤT KÉO THẢ */
+        /* 🛋 NỘI THẤT KÉO THẢ & PHÓNG TO THU NHỎ */
         .placed-furniture { position: absolute; cursor: move; z-index: 80; display: inline-block; touch-action: none; }
-        .placed-furniture img { display: block; max-width: 160px; pointer-events: auto; }
+        .placed-furniture img { display: block; max-width: 160px; pointer-events: auto; transform-origin: center center; }
 
         .furniture-controls {
             position: absolute; top: -32px; left: 50%; transform: translateX(-50%);
@@ -119,7 +147,7 @@
         .modal-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(74, 46, 43, 0.65); backdrop-filter: blur(3px);
-            z-index: 200; display: none; align-items: center; justify-content: center; padding: 16px;
+            z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px;
         }
         .modal-card {
             width: 100%; max-width: 320px; background: #fffdf7; border: 3px solid #e76f51;
@@ -156,14 +184,14 @@
         
         <div class="top-right-controls">
             <div class="money-badge">🪙 <span id="txt-money">3.000.000</span>đ</div>
-            <div class="btn-setting" onclick="openSettingsModal()">⚙️</div>
+            <div class="btn-setting" onclick="openSettingsModal()">⚙</div>
         </div>
     </div>
 
     <!-- VIEWPORT CONTAINER -->
     <div id="viewport">
         <!-- 🗺 MÀN HÌNH 1: BẢN ĐỒ MAP -->
-        <div class="screen-view active" id="view-map">
+        <div id="view-map">
             <div id="map-container">
                 <img src="map.png" class="map-bg-img" alt="Map">
 
@@ -192,7 +220,7 @@
         </div>
 
         <!-- 🏪 MÀN HÌNH 2: TIỆM BÁNH 3 PHÒNG -->
-        <div class="screen-view" id="view-bakery">
+        <div id="view-bakery">
             <div class="room-nav-bar">
                 <button class="btn-back-map" onclick="backToMap()">🗺 Bản Đồ</button>
                 <div class="tab-switcher">
@@ -205,18 +233,24 @@
             <!-- Tab 1: Phòng Bán Hàng -->
             <div id="subview-sell" class="room-scroll-container" onclick="deselectFurniture(event)">
                 <img src="phongbanhong.png" class="wide-room-bg" alt="Phòng Bán Hàng" onerror="this.src='phongbantrang.png'">
+                <!-- Khung Cửa Lớn Chuyển Sang Căn Bếp -->
+                <div class="door-hotspot" id="door-sell" onclick="doorClickNextRoom('kitchen', event)"></div>
                 <div id="furniture-layer-sell"></div>
             </div>
 
             <!-- Tab 2: Căn Bếp -->
             <div id="subview-kitchen" class="room-scroll-container" style="display:none;" onclick="deselectFurniture(event)">
                 <img src="phongbephong.png" class="wide-room-bg" alt="Căn Bếp" onerror="this.src='phongbeptrang.png'">
+                <!-- Khung Cửa Lớn Chuyển Sang Kho Hàng -->
+                <div class="door-hotspot" id="door-kitchen" onclick="doorClickNextRoom('storage', event)"></div>
                 <div id="furniture-layer-kitchen"></div>
             </div>
 
             <!-- Tab 3: Kho Hàng -->
             <div id="subview-storage" class="room-scroll-container" style="display:none;" onclick="deselectFurniture(event)">
                 <img src="phongkhohong.png" class="wide-room-bg" alt="Kho Hàng" onerror="this.src='phongkhotrang.png'">
+                <!-- Khung Cửa Lớn Quay Lại Phòng Bán Hàng -->
+                <div class="door-hotspot" id="door-storage" onclick="doorClickNextRoom('sell', event)"></div>
                 <div id="furniture-layer-storage"></div>
             </div>
         </div>
@@ -323,10 +357,9 @@
         document.getElementById('txt-bakery-name').innerText = gameState.bakeryName;
         document.getElementById('txt-money').innerText = gameState.money.toLocaleString('vi-VN');
 
-        // Tự động tặng Quầy Gỗ Xồi lúc đầu
         setTimeout(() => {
             placeFurniture('quaygoxoi.png', 'sell');
-        }, 500);
+        }, 300);
     }
 
     function enterBakery() {
@@ -360,6 +393,12 @@
             document.getElementById('subview-storage').style.display = 'block';
             document.getElementById('btn-tab-storage').classList.add('active');
         }
+    }
+
+    /* 🚪 CHUYỂN PHÒNG BẰNG CÁCH BẤM KHUNG CỬA LỚN */
+    function doorClickNextRoom(targetRoom, e) {
+        e.stopPropagation();
+        switchRoom(targetRoom);
     }
 
     function openDecorShop() { document.getElementById('modal-decor-shop').style.display = 'flex'; }
@@ -402,7 +441,7 @@
         `;
 
         itemDiv.addEventListener('click', (e) => selectFurniture(itemId, e));
-        makeDraggable(itemDiv);
+        makeDraggableAndZoomable(itemDiv);
         if(layer) layer.appendChild(itemDiv);
     }
 
@@ -435,7 +474,7 @@
         e.stopPropagation();
         const item = document.getElementById(id);
         let scale = parseFloat(item.dataset.scale) + delta;
-        if (scale >= 0.5 && scale <= 1.8) {
+        if (scale >= 0.3 && scale <= 2.2) {
             item.dataset.scale = scale;
             applyTransform(item);
         }
@@ -454,10 +493,14 @@
         if (item) item.remove();
     }
 
-    function makeDraggable(elmnt) {
+    /* 🤏 KÉO THẢ VÀ PHÓNG TO THU NHỎ BẰNG 2 NGÓN TAY (PINCH TO ZOOM) */
+    function makeDraggableAndZoomable(elmnt) {
         let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        let initialPinchDistance = null;
+        let initialScale = 1;
+
         elmnt.onmousedown = dragMouseDown;
-        elmnt.ontouchstart = dragTouchStart;
+        elmnt.ontouchstart = touchStartHandler;
 
         function dragMouseDown(e) {
             e.preventDefault(); pos3 = e.clientX; pos4 = e.clientY;
@@ -474,20 +517,52 @@
 
         function closeDragElement() { document.onmouseup = null; document.onmousemove = null; }
 
-        function dragTouchStart(e) {
-            const touch = e.touches[0]; pos3 = touch.clientX; pos4 = touch.clientY;
-            document.ontouchend = closeTouchElement; document.ontouchmove = elementTouchMove;
+        function touchStartHandler(e) {
+            if (e.touches.length === 1) {
+                const touch = e.touches[0]; pos3 = touch.clientX; pos4 = touch.clientY;
+                document.ontouchend = closeTouchElement; document.ontouchmove = elementTouchMove;
+            } else if (e.touches.length === 2) {
+                initialPinchDistance = getPinchDistance(e.touches);
+                initialScale = parseFloat(elmnt.dataset.scale) || 1;
+                document.ontouchmove = handlePinchMove;
+                document.ontouchend = closeTouchElement;
+            }
         }
 
         function elementTouchMove(e) {
-            const touch = e.touches[0];
-            pos1 = pos3 - touch.clientX; pos2 = pos4 - touch.clientY;
-            pos3 = touch.clientX; pos4 = touch.clientY;
-            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            if (e.touches.length === 1) {
+                const touch = e.touches[0];
+                pos1 = pos3 - touch.clientX; pos2 = pos4 - touch.clientY;
+                pos3 = touch.clientX; pos4 = touch.clientY;
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
         }
 
-        function closeTouchElement() { document.ontouchend = null; document.ontouchmove = null; }
+        function handlePinchMove(e) {
+            if (e.touches.length === 2 && initialPinchDistance) {
+                const newDistance = getPinchDistance(e.touches);
+                const zoomFactor = newDistance / initialPinchDistance;
+                let newScale = initialScale * zoomFactor;
+                if (newScale >= 0.3 && newScale <= 2.2) {
+                    elmnt.dataset.scale = newScale;
+                    applyTransform(elmnt);
+                }
+            }
+        }
+
+        function getPinchDistance(touches) {
+            return Math.hypot(
+                touches[0].clientX - touches[1].clientX,
+                touches[0].clientY - touches[1].clientY
+            );
+        }
+
+        function closeTouchElement() { 
+            document.ontouchend = null; 
+            document.ontouchmove = null; 
+            initialPinchDistance = null;
+        }
     }
 
     function openProfileModal() {
@@ -525,7 +600,7 @@
         const titleEl = document.getElementById('popup-title');
         const contentEl = document.getElementById('popup-content');
         titleEl.innerText = "THÔNG TIN CỬA HÀNG";
-        contentEl.innerText = "Chức năng mua sắm nguyên liệu sẽ mở ở các màn tiếp theo!";
+        contentEl.innerText = "Chức năng mua sắm sẽ mở ở các module tiếp theo!";
         document.getElementById('modal-shop-info').style.display = 'flex';
     }
     function closeShopModal() { document.getElementById('modal-shop-info').style.display = 'none'; }
